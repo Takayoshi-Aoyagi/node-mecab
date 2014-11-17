@@ -1,0 +1,23 @@
+{
+  "name": "node-mecab",
+  "version": "0.0.1",
+  "description": "Using mecab via node.js",
+  "main": "node-mecab.js",
+  "scripts": {
+    "test": "test.js"
+  },
+  "keywords": [
+    "mecab",
+    "node.js"
+  ],
+  "author": "Takayoshi Aoyagi",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Takayoshi-Aoyagi/node-mecab.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Takayoshi-Aoyagi/node-mecab/issues"
+  },
+  "homepage": "https://github.com/Takayoshi-Aoyagi/node-mecab"
+}
