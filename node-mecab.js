@@ -3,7 +3,13 @@
 var child_process = require('child_process'),
     util = require('util');
 
-var Mecab = function () {};
+var Mecab = function () {},
+    cmd;
+
+/**
+ * set your mecab path
+ */
+cmd = '/usr/local/bin/mecab';
 
 function execCommand (command, callback) {
     var error,
@@ -39,7 +45,7 @@ function parse(data, callback) {
 
 
 Mecab.exec = function (str, callback) {
-    var command = util.format('echo "%s" | mecab', str);
+    var command = util.format('echo "%s" | %s', str, cmd);
     
     execCommand(command, function (err, data) {
 	if (err) {
