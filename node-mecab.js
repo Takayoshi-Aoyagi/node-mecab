@@ -27,22 +27,24 @@ function execCommand (command, callback) {
 
 function parse(data, callback) {
     var result = [];
-    var regexp = /^(.+)\t(.+),(.+),(.+),(.+),(.+),(.+),(.+),(.+),(.+)$/
-	var lines = data.split('\n');
+    var regexp = /^(.+)\t(.+)$/;
+    var lines = data.split('\n');
     if (!lines) {
 	callback('Invalid Result!', null);
 	return;
     }
     lines.forEach(function (line) {
-	var arr = line.match(regexp);
-	if (!arr) {
+	var arr = line.split("\t"),
+	    tmp = [];
+	if (!arr || arr.length !== 2) {
 	    return;
 	}
-	result.push(arr.splice(1));
+	tmp.push(arr[0]);
+	tmp = tmp.concat(arr[1].split(","));
+	result.push(tmp);
     });
     callback(null, result);
 }
-
 
 Mecab.exec = function (str, callback) {
     var command = util.format('echo "%s" | %s', str, cmd);
