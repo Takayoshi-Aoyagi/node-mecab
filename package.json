@@ -1,6 +1,6 @@
 {
   "name": "node-mecab",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Using mecab via node.js",
   "main": "node-mecab.js",
   "scripts": {

@@ -3,14 +3,6 @@
 var child_process = require('child_process'),
     util = require('util');
 
-var Mecab = function () {},
-    cmd;
-
-/**
- * set your mecab path
- */
-cmd = '/usr/local/bin/mecab';
-
 function execCommand (command, callback) {
     var error,
 	child;
@@ -34,20 +26,39 @@ function parse(data, callback) {
 	return;
     }
     lines.forEach(function (line) {
-	var arr = line.split("\t"),
-	    tmp = [];
-	if (!arr || arr.length !== 2) {
-	    return;
+	var array = Mecab.parseLine(line);
+	if (array === null) {
+	    return; // continue;
 	}
-	tmp.push(arr[0]);
-	tmp = tmp.concat(arr[1].split(","));
-	result.push(tmp);
+	if (!util.isArray(array)) {
+	    console.log(array);
+	    throw new Error("parseLine: malformed return value.");
+	}
+	result.push(array);
     });
     callback(null, result);
 }
 
+var Mecab = function () {};
+
+/**
+ * set your mecab path
+ */
+Mecab.COMMAND = '/usr/local/bin/mecab';
+
+/**
+ * set your line parser
+ */
+Mecab.parseLine = function (line) {
+    var arr = line.split(/\t|\,/);
+    if (!arr || arr.length < 2) {
+	return null;
+    }
+    return arr;
+};
+
 Mecab.exec = function (str, callback) {
-    var command = util.format('echo "%s" | %s', str, cmd);
+    var command = util.format('echo "%s" | %s', str, Mecab.COMMAND);
     
     execCommand(command, function (err, data) {
 	if (err) {
